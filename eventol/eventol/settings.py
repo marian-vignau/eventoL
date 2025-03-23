@@ -1,9 +1,12 @@
 # pylint: disable=missing-docstring
 # pylint: disable=W0232
 # pylint: disable=C0103
+# pylint: disable=W0611
 
 import os
+import socket
 
+import raven
 from configurations import Configuration
 from django.utils.translation import ugettext_lazy as _
 from easy_thumbnails.conf import Settings as thumbnail_settings
@@ -11,7 +14,7 @@ from easy_thumbnails.optimize.conf import OptimizeSettings
 
 
 def str_to_bool(str_bool):
-    return str_bool == 'True'
+    return str_bool.lower() == 'true'
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -63,10 +66,11 @@ class Base(Configuration):
         'channels',
         'django_extensions',
         'vote',
+        'tempus_dominus',
         'forms_builder.forms',
     )
 
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE = (
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.locale.LocaleMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -109,6 +113,7 @@ class Base(Configuration):
         ('da', _('Danish')),
         ('en', _('English')),
         ('es', _('Spanish')),
+        ('fr', _('French')),
         ('nb', _('Norwegian Bokmal')),
         ('nl', _('Dutch')),
         ('sv', _('Swedish')),
@@ -165,12 +170,16 @@ class Base(Configuration):
 
     CKEDITOR_CONFIGS = {
         'default': {
-            'toolbar': 'full'
+            'toolbar': 'full',
+            'width': 'unset',
         },
     }
 
     CKEDITOR_UPLOAD_PATH = 'uploads/'
-    FILE_UPLOAD_PERMISSIONS = 0o644
+    DONT_SET_FILE_UPLOAD_PERMISSIONS = str_to_bool(
+        os.getenv('DONT_SET_FILE_UPLOAD_PERMISSIONS', 'False')
+    )
+    FILE_UPLOAD_PERMISSIONS = None if DONT_SET_FILE_UPLOAD_PERMISSIONS else 0o644
 
     AUTHENTICATION_BACKENDS = (
         # Needed to login by username in Django admin, regardless of `allauth`
@@ -233,6 +242,8 @@ class Base(Configuration):
 
     CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
     CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null',)
+    CAPTCHA_FLITE_PATH = '/usr/bin/flite'
+    CAPTCHA_SOX_PATH = '/usr/bin/sox'
 
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'front/eventol/static'),
@@ -258,7 +269,7 @@ class Base(Configuration):
         },
     }
 
-    IS_ALPINE = os.getenv('IS_ALPINE', False)
+    IS_ALPINE = os.getenv('IS_ALPINE', "not found") != "not found"
     if IS_ALPINE:
         CHANNEL_LAYERS['default'] = {
             'BACKEND': 'asgi_redis.RedisChannelLayer',
@@ -283,18 +294,12 @@ class Base(Configuration):
 
     ADMIN_TITLE = os.getenv('ADMIN_TITLE', 'EventoL')
     WS_PROTOCOL = os.getenv('PROTOCOL', 'ws')
-
-    # Change test runner
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-    NOSE_ARGS = [
-        '--with-coverage',
-        '--cover-package=manager,eventol',
-    ]
     PRIVATE_ACTIVITIES = os.environ.get("PRIVATE_ACTIVITIES", True)
+    TEMPUS_DOMINUS_LOCALIZE = True
+    TEMPUS_DOMINUS_INCLUDE_ASSETS = True
 
 
 class Staging(Base):
-    import socket
     DEBUG = str_to_bool(os.getenv('DEBUG', 'True'))
     SECRET_KEY = os.getenv(
         'SECRET_KEY',
@@ -357,7 +362,10 @@ class Staging(Base):
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.handlers.RotatingFileHandler',
-                'filename': os.getenv('LOG_FILE', '/var/log/eventol.log'),
+                'filename': os.getenv(
+                    'LOG_FILE',
+                    '/var/log/eventol/eventol.log'
+                ),
                 'maxBytes': 1024*1024*10,
                 'backupCount': 10,
                 'formatter': 'logservices'
@@ -391,6 +399,14 @@ class Staging(Base):
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
     MEDIA_URL = '/media/'
 
+    INSTALLED_APPS = Base.INSTALLED_APPS + (
+        'raven.contrib.django.raven_compat',
+    )
+
+    RAVEN_CONFIG = {
+        'dsn': os.environ.get("SENTRY_DSN", "NOT_CONFIGURED")
+    }
+
 
 class Prod(Staging):
     DEBUG = False
@@ -398,7 +414,6 @@ class Prod(Staging):
 
 class Dev(Base):
     INSTALLED_APPS = Base.INSTALLED_APPS + (
-        'django_nose',
         'autofixture',
         'debug_toolbar',
     )
@@ -444,4 +459,5 @@ class Dev(Base):
 
 
 class Test(Dev):
-    pass
+    WEBPACK_LOADER = Prod.WEBPACK_LOADER
+    REST_FRAMEWORK = Prod.REST_FRAMEWORK

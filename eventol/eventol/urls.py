@@ -10,7 +10,8 @@ from rest_framework import routers
 from .api import (EventViewSet, EventUserViewSet, InstallerViewSet,
                   CollaboratorViewSet, OrganizerViewSet, ActivityViewSet,
                   AttendeeViewSet, InstallationViewSet, RoomViewSet,
-                  SoftwareViewSet, HardwareViewSet, EventTagSet)
+                  SoftwareViewSet, HardwareViewSet, EventTagSet,
+                  ActivityTypeViewSet)
 
 import forms_builder.forms.urls
 
@@ -25,6 +26,7 @@ router.register(r'collaborators', CollaboratorViewSet)
 router.register(r'organizers', OrganizerViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'activities', ActivityViewSet)
+router.register(r'activityTypes', ActivityTypeViewSet)
 router.register(r'attendees', AttendeeViewSet)
 router.register(r'softwares', SoftwareViewSet)
 router.register(r'hardwares', HardwareViewSet)
@@ -35,6 +37,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^$', views.home, name="home"),
     url(r'^api/', include(router.urls)),
+    url(r'^instance_details$', views.instance_details, name='instance_details'),
     url(r'^report$', views.generic_report, name='generic_report'),
     url(r'^create-event/$', views.create_event, name="create_event"),
     url(r'^events/', include('manager.urls.events'), name='events'),

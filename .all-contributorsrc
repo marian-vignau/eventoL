@@ -1,0 +1,186 @@
+{
+  "projectName": "eventoL",
+  "projectOwner": "eventoL",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md",
+    "README-es.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "FedeG",
+      "name": "Federico Gonzalez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4097554?v=4",
+      "profile": "https://github.com/FedeG",
+      "contributions": [
+        "a11y",
+        "bug",
+        "blog",
+        "code",
+        "design",
+        "doc",
+        "ideas",
+        "maintenance",
+        "projectManagement",
+        "review",
+        "security",
+        "translation",
+        "test",
+        "infra"
+      ]
+    },
+    {
+      "login": "reyiyo",
+      "name": "Sergio Orbe",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/761204?v=4",
+      "profile": "https://github.com/reyiyo",
+      "contributions": [
+        "code",
+        "design",
+        "ideas"
+      ]
+    },
+    {
+      "login": "ChmlGr",
+      "name": "Ximena Garcia",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5685527?v=4",
+      "profile": "https://github.com/ChmlGr",
+      "contributions": [
+        "code",
+        "design",
+        "ideas"
+      ]
+    },
+    {
+      "login": "HacKanCuBa",
+      "name": "HacKan",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7178420?v=4",
+      "profile": "https://hackan.net",
+      "contributions": [
+        "code",
+        "design",
+        "ideas",
+        "test"
+      ]
+    },
+    {
+      "login": "gilgamezh",
+      "name": "Nicolás Demarchi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1496486?v=4",
+      "profile": "http://gilgamezh.me",
+      "contributions": [
+        "code",
+        "ideas",
+        "infra"
+      ]
+    },
+    {
+      "login": "comradekingu",
+      "name": "Allan Nordhøy",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13802408?v=4",
+      "profile": "http://portfolio.anotheragency.no",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Vistaus",
+      "name": "Heimen Stoffels",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1716229?v=4",
+      "profile": "https://github.com/Vistaus",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "lizzyd710",
+      "name": "Elizabeth Sherrock",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12602768?v=4",
+      "profile": "https://github.com/lizzyd710",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "NathanBnm",
+      "name": "Nathan Bonnemains",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45366162?v=4",
+      "profile": "https://nathanbonnemains.squill.fr",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "tinolin",
+      "name": "Tinolin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9253592?v=4",
+      "profile": "https://github.com/tinolin",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "cuococarlos",
+      "name": "Charlie",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5522872?v=4",
+      "profile": "https://github.com/cuococarlos",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "josx",
+      "name": "José Luis Di Biase",
+      "avatar_url": "https://avatars.githubusercontent.com/u/791137?v=4",
+      "profile": "http://www.camba.coop",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "GEscandar",
+      "name": "GEscandar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66099900?v=4",
+      "profile": "https://github.com/GEscandar",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ngodoy",
+      "name": "Nestor Luis Godoy Carmona",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2965269?v=4",
+      "profile": "http://www.nestorgodoy.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "cacrespo",
+      "name": "Carlos A. Crespo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10950697?v=4",
+      "profile": "https://github.com/cacrespo",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "osiris",
+      "name": "OSiUX",
+      "avatar_url": "https://avatars.githubusercontent.com/u/360084?v=4",
+      "profile": "https://osiux.com/",
+      "contributions": [
+        "code",
+        "bug",
+        "tool"
+      ]
+    }
+  ],
+  "contributorsPerLine": 5,
+  "skipCi": true,
+  "commitType": "docs"
+}

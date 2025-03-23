@@ -1,3 +1,6 @@
+# pylint: disable=arguments-differ
+# pylint: disable=too-many-lines
+
 import datetime
 import itertools
 import json
@@ -18,7 +21,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils.translation import ugettext_lazy as _, ugettext_noop as _noop
-from forms_builder.forms.models import STATUS_PUBLISHED, STATUS_CHOICES, AbstractField, AbstractForm
+from forms_builder.forms.models import AbstractField, AbstractForm
 from image_cropping import ImageCropField, ImageRatioField
 
 from vote.models import VoteModel
@@ -124,7 +127,7 @@ class CustomForm(AbstractForm):
     def __str__(self):
         return self.title
 
-    class Meta(object):
+    class Meta:
         ordering = ['title']
         verbose_name = _('Custom Form')
         verbose_name_plural = _('Custom Forms')
@@ -145,7 +148,7 @@ class CustomField(AbstractField):
     def __str__(self):
         return '{0}: {1} ({2})'.format(self.form, self.label, self.slug)
 
-    class Meta(object):
+    class Meta:
         ordering = ['form', 'order']
         verbose_name = _('Custom Field')
         verbose_name_plural = _('Custom Fields')
@@ -166,7 +169,7 @@ class Event(models.Model):
         default=False, help_text=_("set it to True to force the registration to be closed"))
 
     tags = models.ManyToManyField(
-        EventTag, help_text=_("Select tags to show this event in the EventTag landing"))
+        EventTag, blank=True, help_text=_("Select tags to show this event in the EventTag landing"))
     event_slug = models.SlugField(_('URL'), max_length=100,
                                   help_text=_('For example: flisol-caba'), unique=True)
     customForm = models.ForeignKey(CustomForm, verbose_name=_noop('Custom form'),
@@ -192,22 +195,34 @@ class Event(models.Model):
     use_installers = models.BooleanField(_('Use Installers'), default=True)
     use_collaborators = models.BooleanField(_('Use Collaborators'), default=True)
     use_proposals = models.BooleanField(_('Use Proposals'), default=True)
+    use_talks = models.BooleanField(_('Use Talks'), default=True)
     is_flisol = models.BooleanField(_('Is FLISoL'), default=False)
     use_schedule = models.BooleanField(_('Use Schedule'), default=True)
-    place = models.TextField(_('Place'))
+    place = models.TextField(_('Place'), null=True, blank=True)
     image = ImageCropField(upload_to='images_thumbnails',
                            verbose_name=_('Image'), blank=True, null=True)
     cropping = ImageRatioField('image', '700x450', size_warning=True,
                                verbose_name=_('Cropping'), free_crop=True,
                                help_text=_('The image must be 700x450 px. You can crop it here.'))
-    activities_proposal_form_text = models.TextField(
-        blank=True, null=True, help_text=_("A message to show in the activities proposal form"))
+    activities_proposal_form_text = RichTextField(
+        verbose_name=_('Activity proposal form text'),
+        help_text=_("A message to show in the activities proposal form"),
+        blank=True, null=True
+    )
     template = models.FileField(_('Template'),
                                 upload_to='templates', blank=True, null=True,
                                 help_text=_('Custom template HTML for event index page'))
-    css_custom = models.FileField(_('Custom css'),
+    css_custom = models.FileField(_('Custom CSS'),
                                   upload_to='custom_css', blank=True, null=True,
                                   help_text=_('Custom CSS file for event page'))
+
+    @classmethod
+    def get_fields_dependencies(cls):
+        return {
+            'use_proposals': ['limit_proposal_date', 'activities_proposal_form_text'],
+            'use_talks': ['use_proposals'],
+            'use_installations': ['use_installers']
+        }
 
     @property
     def location(self):
@@ -225,6 +240,8 @@ class Event(models.Model):
             return components
         except json.JSONDecodeError as error:
             logger.error(error)
+        except:
+            pass
         return []
 
     @property
@@ -254,12 +271,12 @@ class Event(models.Model):
     def get_absolute_url(self):
         if self.external_url:
             return self.external_url
-        return reverse('event', kwargs={'event_slug': self.event_slug})
+        return reverse('index', kwargs={'event_slug': self.event_slug})
 
     def __str__(self):
         return self.name
 
-    class Meta(object):
+    class Meta:
         ordering = ['name']
         verbose_name = _('Event')
         verbose_name_plural = _('Events')
@@ -283,7 +300,7 @@ class EventDate(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.event, self.date)
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Event Date')
         verbose_name_plural = _('Event Dates')
 
@@ -306,7 +323,7 @@ class ContactMessage(models.Model):
             message=self.message
         )
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Contact Message')
         verbose_name_plural = _('Contact Messages')
 
@@ -331,7 +348,7 @@ class ContactType(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Contact Type')
         verbose_name_plural = _('Contact Types')
 
@@ -349,7 +366,7 @@ class Contact(models.Model):
     def __str__(self):
         return '{} - {} - {}'.format(self.event, self.type, self.text)
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Contact')
         verbose_name_plural = _('Contacts')
 
@@ -418,7 +435,7 @@ class EventUser(models.Model):
     def __str__(self):
         if self.user:
             return '{} at event:{}'.format(self.user.username, self.event)
-        return '{}'.format(self.event.title)
+        return '{}'.format(self.event)
 
     def get_ticket_data(self):
         if self.ticket is None:
@@ -440,7 +457,7 @@ class EventUser(models.Model):
         return EventUserAttendanceDate.objects.filter(
             event_user=self, date__date=timezone.localdate()).exists()
 
-    class Meta(object):
+    class Meta:
         unique_together = (('event', 'user'),)
         verbose_name = _('Event User')
         verbose_name_plural = _('Event Users')
@@ -492,7 +509,7 @@ class Collaborator(models.Model):
                                        blank=True, null=True,
                                        help_text=_('Additional info you consider relevant'))
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Collaborator')
         verbose_name_plural = _('Collaborators')
 
@@ -508,7 +525,7 @@ class Organizer(models.Model):
     event_user = models.ForeignKey(EventUser, verbose_name=_('Event User'),
                                    blank=True, null=True)
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Organizer')
         verbose_name_plural = _('Organizers')
 
@@ -591,7 +608,7 @@ class Attendee(models.Model):
         EventUser, verbose_name=_noop('Event User'), blank=True, null=True)
     customFields = JSONField(default=dict)
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Attendee')
         verbose_name_plural = _('Attendees')
         unique_together = (('event', 'email'),)
@@ -650,7 +667,7 @@ class InstallationMessage(models.Model):
         'Email message HTML Body'), blank=True, null=True)
     contact_email = models.EmailField(verbose_name=_('Contact Email'))
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Post-install Email')
         verbose_name_plural = _('Post-install Emails')
 
@@ -674,7 +691,7 @@ class Installer(models.Model):
                              max_length=200,
                              help_text=_('Knowledge level for an installation'))
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Installer')
         verbose_name_plural = _('Installers')
 
@@ -728,7 +745,7 @@ class Room(models.Model):
     def get_schedule_info(self):
         return {'id': self.pk, 'title': self.name}
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Room')
         verbose_name_plural = _('Rooms')
         ordering = ['name']
@@ -750,6 +767,16 @@ class ActivityManager(models.Manager):
             'not_confirmed': total - confirmed,
             'total': total
         }
+
+    @staticmethod
+    def get_activities_report(event):
+        activities = Activity.objects.filter(event=event, is_dummy=False)
+        return activities.values(
+            'id', 'title', 'abstract', 'long_description',
+            'activity_type', 'labels', 'level', 'additional_info',
+            'speakers_names', 'owner__user__username', 'owner__user__first_name',
+            'owner__user__last_name', 'owner__user__email', 'speaker_bio'
+        )
 
     def get_counts_by_event(self, event):
         queryset = Activity.objects.filter(event=event)
@@ -782,12 +809,12 @@ class Activity(VoteModel, models.Model):
                              blank=True, null=True)
     start_date = models.DateTimeField(_('Start Time'), blank=True, null=True)
     end_date = models.DateTimeField(_('End Time'), blank=True, null=True)
-    activity_type = models.ForeignKey(ActivityType)
+    activity_type = models.ForeignKey(ActivityType, verbose_name=_('Activity Type'))
     speakers_names = models.CharField(_('Speakers Names'), max_length=600,
                                       help_text=_("Comma separated speaker names"))
     speaker_bio = models.TextField(
         _('Speaker Bio'), null=True,
-        help_text=_('Tell us about you (we will user it as your "bio" in our website'))
+        help_text=_('Tell us about you (we will use it as your "bio" in our website)'))
     labels = models.CharField(_('Labels'), max_length=200,
                               help_text=_('Comma separated tags. i.e. Linux, \
                                           Free Software, Devuan'))
@@ -820,7 +847,7 @@ class Activity(VoteModel, models.Model):
     image = ImageCropField(upload_to='images_thumbnails',
                            verbose_name=_('Image'), blank=True, null=True)
     cropping = ImageRatioField('image', '700x450', size_warning=True,
-                               verbose_name=_('Cropping'),
+                               verbose_name=_('Cropping'), free_crop=True,
                                help_text=_('The image must be 700x450 px. You can crop it here.'))
 
     is_dummy = models.BooleanField(_('Is a dummy Activity?'), default=False,
@@ -904,7 +931,7 @@ class Activity(VoteModel, models.Model):
             return False
         return True
 
-    class Meta(object):
+    class Meta:
         ordering = ['title']
         verbose_name = _('Activity')
         verbose_name_plural = _('Activities')
@@ -952,7 +979,7 @@ class Installation(models.Model):
     def __str__(self):
         return '{}, {}, {}'.format(self.attendee, self.hardware, self.software)
 
-    class Meta(object):
+    class Meta:
         verbose_name = _('Installation')
         verbose_name_plural = _('Installations')
 

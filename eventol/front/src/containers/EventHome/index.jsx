@@ -7,24 +7,31 @@ import Header from '../../components/Header';
 import Search from '../../components/Search';
 import TitleList from '../../components/TitleList';
 import {
-  getSearchUrl, getMyEventsUrl,
-  getUpcommingEventsUrl,
+  getSearchUrl,
+  getMyEventsUrl,
+  getUpcomingEventsUrl,
   getFinishedEventsUrl,
 } from '../../utils/urls';
 import {
-  MOBILE_WIDTH,
   BACKGROUND_DEFAULT,
   LOGO_HEADER_DEFAULT,
   LOGO_LANDING_DEFAULT,
 } from '../../utils/constants';
 
 import './index.scss';
+import {mapSizesToProps} from '../../utils/dom';
 
-
-class EventHome extends React.Component {
+class EventHome extends React.PureComponent {
   static propTypes = {
-    isMobile: PropTypes.bool.isRequired,
     background: PropTypes.string,
+    handleOnChangeLanguage: PropTypes.func,
+    isMobile: PropTypes.bool.isRequired,
+    languages: PropTypes.arrayOf(
+      PropTypes.shape({
+        code: PropTypes.string,
+        name: PropTypes.string,
+      })
+    ),
     logoHeader: PropTypes.string,
     logoLanding: PropTypes.string,
     tagMessage: PropTypes.string,
@@ -33,60 +40,93 @@ class EventHome extends React.Component {
       first_name: PropTypes.string,
       last_name: PropTypes.string,
     }),
-  }
+  };
 
   static defaultProps = {
     background: BACKGROUND_DEFAULT,
+    handleOnChangeLanguage: null,
+    languages: [],
     logoHeader: LOGO_HEADER_DEFAULT,
     logoLanding: LOGO_LANDING_DEFAULT,
     tagMessage: null,
     tagSlug: null,
     user: null,
-  }
+  };
 
   state = {
-    searchTerm: '',
     searchUrl: '',
     searched: false,
-  }
+  };
 
-  handleOnEnter = () => {
+  handleOnEnter = searchTerm => {
     const {tagSlug} = this.props;
-    const {searchTerm} = this.state;
-    if (searchTerm !== ''){
+    if (searchTerm !== '') {
       const searchUrl = getSearchUrl(searchTerm, tagSlug);
       this.setState({searchUrl, searched: true});
     }
-  }
+  };
 
-  handleOnChange = searchTerm => this.setState({searchTerm})
+  handlerOnChangeLanguage = languageCode => {
+    const {handleOnChangeLanguage} = this.props;
+    if (handleOnChangeLanguage) {
+      handleOnChangeLanguage(languageCode);
+    }
+  };
 
-  render(){
+  render() {
     const {searched, searchUrl} = this.state;
     const {
-      user, tagSlug, background,
-      logoHeader, logoLanding,
-      tagMessage, isMobile,
+      user,
+      tagSlug,
+      background,
+      logoHeader,
+      logoLanding,
+      tagMessage,
+      isMobile,
+      languages,
     } = this.props;
     return (
       <div>
-        <Header logoHeader={logoHeader} user={user} isMobile={isMobile} />
-        <Hero background={background} logoLanding={logoLanding} message={tagMessage} slug={tagSlug}>
-          <Search onChange={this.handleOnChange} onEnter={this.handleOnEnter} />
+        <Header
+          handlerOnChangeLanguage={this.handlerOnChangeLanguage}
+          isMobile={isMobile}
+          languages={languages}
+          logoHeader={logoHeader}
+          user={user}
+        />
+
+        <Hero
+          background={background}
+          logoLanding={logoLanding}
+          message={tagMessage}
+          slug={tagSlug}
+        >
+          <Search onEnter={this.handleOnEnter} />
         </Hero>
-        {searched && <TitleList showEmpty id='search_results' title={gettext('Search results')} url={searchUrl} />}
+
+        {searched && (
+          <TitleList
+            id="search_results"
+            showEmpty
+            title={gettext('Search results')}
+            url={searchUrl}
+          />
+        )}
+
         <TitleList
-          id='my_events'
+          id="my_events"
           title={gettext('My Events')}
           url={getMyEventsUrl(tagSlug)}
         />
+
         <TitleList
-          id='next'
+          id="next"
           title={gettext('Upcoming Events')}
-          url={getUpcommingEventsUrl(tagSlug)}
+          url={getUpcomingEventsUrl(tagSlug)}
         />
+
         <TitleList
-          id='finished'
+          id="finished"
           title={gettext('Finished Events')}
           url={getFinishedEventsUrl(tagSlug)}
         />
@@ -94,9 +134,5 @@ class EventHome extends React.Component {
     );
   }
 }
-
-const mapSizesToProps = ({width}) => ({
-  isMobile: width < MOBILE_WIDTH,
-});
 
 export default withSizes(mapSizesToProps)(EventHome);

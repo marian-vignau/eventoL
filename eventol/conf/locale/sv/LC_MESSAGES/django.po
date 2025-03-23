@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 04:58+0000\n"
+"POT-Creation-Date: 2022-04-11 14:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,9 @@ msgstr ""
 msgid "Spanish"
 msgstr ""
 
+msgid "French"
+msgstr ""
+
 msgid "Norwegian Bokmal"
 msgstr ""
 
@@ -36,7 +39,46 @@ msgstr ""
 msgid "Swedish"
 msgstr ""
 
+msgid "Chinese"
+msgstr ""
+
+msgid "Owner"
+msgstr ""
+
+msgid "Anonymous"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Installer"
+msgstr ""
+
+msgid "Room"
+msgstr ""
+
+msgid "Hardware"
+msgstr ""
+
+msgid "Software"
+msgstr ""
+
 msgid "Attendee"
+msgstr ""
+
+msgid "Has background"
+msgstr ""
+
+msgid "Has logo header"
+msgstr ""
+
+msgid "Has logo landing"
 msgstr ""
 
 msgid "Collaborator/Installer"
@@ -152,9 +194,6 @@ msgstr ""
 msgid "http://www.my-awesome-event.com"
 msgstr ""
 
-msgid "Email"
-msgstr ""
-
 msgid "Event Info"
 msgstr ""
 
@@ -176,6 +215,9 @@ msgstr ""
 msgid "Use Proposals"
 msgstr ""
 
+msgid "Use Talks"
+msgstr ""
+
 msgid "Is FLISoL"
 msgstr ""
 
@@ -194,6 +236,9 @@ msgstr ""
 msgid "The image must be 700x450 px. You can crop it here."
 msgstr ""
 
+msgid "Activity proposal form text"
+msgstr ""
+
 msgid "A message to show in the activities proposal form"
 msgstr ""
 
@@ -203,13 +248,10 @@ msgstr ""
 msgid "Custom template HTML for event index page"
 msgstr ""
 
-msgid "Custom css"
+msgid "Custom CSS"
 msgstr ""
 
 msgid "Custom CSS file for event page"
-msgstr ""
-
-msgid "Event"
 msgstr ""
 
 msgid "Events"
@@ -285,9 +327,6 @@ msgid "number"
 msgstr ""
 
 msgid "Unique identifier for the ticket"
-msgstr ""
-
-msgid "User"
 msgstr ""
 
 msgid "Ticket"
@@ -417,9 +456,6 @@ msgstr ""
 msgid "Knowledge level for an installation"
 msgstr ""
 
-msgid "Installer"
-msgstr ""
-
 msgid "Installers"
 msgstr ""
 
@@ -462,9 +498,6 @@ msgstr ""
 msgid "i.e. Classroom 256"
 msgstr ""
 
-msgid "Room"
-msgstr ""
-
 msgid "Rooms"
 msgstr ""
 
@@ -492,6 +525,9 @@ msgstr ""
 msgid "End Time"
 msgstr ""
 
+msgid "Activity Type"
+msgstr ""
+
 msgid "Speakers Names"
 msgstr ""
 
@@ -501,7 +537,7 @@ msgstr ""
 msgid "Speaker Bio"
 msgstr ""
 
-msgid "Tell us about you (we will user it as your \"bio\" in our website"
+msgid "Tell us about you (we will use it as your \"bio\" in our website)"
 msgstr ""
 
 msgid "Labels"
@@ -580,12 +616,6 @@ msgstr ""
 msgid "Activities"
 msgstr ""
 
-msgid "Hardware"
-msgstr ""
-
-msgid "Software"
-msgstr ""
-
 msgid "The owner of the installed hardware"
 msgstr ""
 
@@ -614,14 +644,21 @@ msgid ""
 "you have any question."
 msgstr ""
 
-msgid ""
-"The page you're looking for is not here. Please try <a href=\"/\">here</a>."
+msgid "Page not found"
 msgstr ""
 
 msgid ""
-"Something, somewhere went terribly wrong. Please,\n"
-"        <a href=\"https://github.com/GNUtn/eventoL/issues\" target=\"_blank"
-"\">let us know!</a>"
+"The page you're looking for is not here.<br>Please try <a href=\"/\">here</"
+"a>."
+msgstr ""
+
+msgid "Internal server error"
+msgstr ""
+
+msgid ""
+"Something, somewhere went terribly wrong.<br>Please,\n"
+"            <a href=\"https://github.com/eventoL/eventoL/issues\" target="
+"\"_blank\">let us know!</a>"
 msgstr ""
 
 msgid "FAQ"
@@ -868,7 +905,22 @@ msgid ""
 "                    <a href=\"%(email_url)s\">change your e-mail address</a>."
 msgstr ""
 
+msgid "Speakers"
+msgstr ""
+
+msgid "Send mail to speakers"
+msgstr ""
+
+msgid "Copy speakers emails"
+msgstr ""
+
+msgid "Export to CSV"
+msgstr ""
+
 msgid "Submit an activity"
+msgstr ""
+
+msgid "Dummy activity"
 msgstr ""
 
 msgid "Manage Rooms"
@@ -877,19 +929,16 @@ msgstr ""
 msgid "Confirm Schedule"
 msgstr ""
 
+msgid "Dummy activities"
+msgstr ""
+
+msgid "Edit dummy activity"
+msgstr ""
+
 msgid "Confirmed"
 msgstr ""
 
-msgid "Speakers"
-msgstr ""
-
 msgid "Speakers Bio"
-msgstr ""
-
-msgid "Start"
-msgstr ""
-
-msgid "End"
 msgstr ""
 
 msgid "Description"
@@ -940,6 +989,9 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
+msgid "Edit activity"
+msgstr ""
+
 msgid "Download presentation"
 msgstr ""
 
@@ -988,6 +1040,9 @@ msgid ""
 msgstr ""
 
 msgid "Return to the event"
+msgstr ""
+
+msgid "Skip to content"
 msgstr ""
 
 msgid "Create event"
@@ -1063,9 +1118,6 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-msgid "Organizadores"
-msgstr ""
-
 msgid "Profile"
 msgstr ""
 
@@ -1073,6 +1125,9 @@ msgid "You have the power!"
 msgstr ""
 
 msgid "ContactMessage"
+msgstr ""
+
+msgid "Play CAPTCHA as audio file"
 msgstr ""
 
 msgid "Create an event"
@@ -1118,7 +1173,7 @@ msgid ""
 "index. Provide the full URL here:"
 msgstr ""
 
-msgid "Please provide a abstract about your event"
+msgid "Please provide an abstract about your event"
 msgstr ""
 
 msgid "Please provide as much information you can about your event"
@@ -1127,7 +1182,7 @@ msgstr ""
 msgid "Winners"
 msgstr ""
 
-msgid "Draw!!"
+msgid "Draw!"
 msgstr ""
 
 msgid "There aren't any more participants"
@@ -1191,7 +1246,7 @@ msgstr ""
 msgid ""
 " Organizers can edit the event information, view attendant's list, manage "
 "activities, manage\n"
-"            attendance and also add other organizers. Please choose "
+"                    attendance and also add other organizers. Please choose "
 "carefully! "
 msgstr ""
 
@@ -1208,8 +1263,7 @@ msgid "Add registration staff"
 msgstr ""
 
 msgid ""
-" People who can manage attendance can register a\n"
-"            person the day of the event."
+" People who can manage attendance can register a person the day of the event."
 msgstr ""
 
 msgid "Current registration staff:"
@@ -1233,13 +1287,16 @@ msgstr ""
 msgid "Add a new review person:"
 msgstr ""
 
-msgid "Browse..."
+msgid "Errors"
 msgstr ""
 
 msgid "Submit an Installation"
 msgstr ""
 
-msgid "Register a Attendee"
+msgid "Register an Attendee"
+msgstr ""
+
+msgid "Instance Details"
 msgstr ""
 
 msgid "Attendee Registration"
@@ -1361,6 +1418,9 @@ msgstr ""
 msgid "There aren't any activities or installations submitted"
 msgstr ""
 
+msgid "There aren't any activities submitted"
+msgstr ""
+
 msgid "Installers Per Level"
 msgstr ""
 
@@ -1374,6 +1434,9 @@ msgid "There aren't any attendees registered yet"
 msgstr ""
 
 msgid "Attendees attendance by hour"
+msgstr ""
+
+msgid "There aren't any attendees registered for this date"
 msgstr ""
 
 msgid "Talks"
@@ -1468,7 +1531,7 @@ msgid ""
 "status.\n"
 "</p>\n"
 "{justification}<p>Regards,</p>\n"
-"{event_name} and <em>eventoL</em> team</p>\n"
+"<p>{event_name} and <em>eventoL</em> team</p>\n"
 msgstr ""
 
 #, python-brace-format
@@ -1486,12 +1549,12 @@ msgstr ""
 
 #, python-brace-format
 msgid ""
-"<p>Hello {first_name} {last_name},<br />\n"
-"Here is your ticket for {event_name} event.</p>\n"
+"<p>Hello {first_name} {last_name},</p><br />\n"
+"<p>Here is your ticket for {event_name} event.</p>\n"
 "<p>Please remember to <em>print it and bring it with you</em> the day(s) of "
 "the event.</p>\n"
-"<p>Regards,\n"
-"{event_name} and <em>eventoL</em> team</p>"
+"<p>Regards,</p>\n"
+"<p>{event_name} and <em>eventoL</em> team</p>"
 msgstr ""
 
 #, python-brace-format
@@ -1635,11 +1698,7 @@ msgstr ""
 msgid "There is a problem with your event. Please check the form for errors."
 msgstr ""
 
-msgid ""
-"The activity proposal is already closed or the "
-"event                            is not accepting proposals through this "
-"page. Please                            contact the Event Organization Team "
-"to submit it."
+msgid "Dummy"
 msgstr ""
 
 msgid ""
@@ -1648,10 +1707,17 @@ msgid ""
 msgstr ""
 
 msgid ""
-"The activity proposal edition is already closed or the "
+"The activity proposal is already closed or the "
 "event                            is not accepting proposals through this "
 "page. Please                            contact the Event Organization Team "
 "to submit it."
+msgstr ""
+
+msgid ""
+"The activity proposal edition is already closed,                            "
+"the schedule is confirmed or the event                            is not "
+"accepting proposals through this page. Please                            "
+"contact the Event Organization Team to submit it."
 msgstr ""
 
 msgid "Please crop or upload a new image."
@@ -1669,6 +1735,27 @@ msgstr ""
 msgid ""
 "The email couldn't sent successfully,                                   "
 "please retry later or contact a organizer"
+msgstr ""
+
+msgid "Additional info"
+msgstr ""
+
+msgid "Speakers names"
+msgstr ""
+
+msgid "Speaker username"
+msgstr ""
+
+msgid "Speaker first name"
+msgstr ""
+
+msgid "Speaker last name"
+msgstr ""
+
+msgid "Speaker email"
+msgstr ""
+
+msgid "Speaker bio"
 msgstr ""
 
 msgid "The talk was registered successfully!"
@@ -1709,7 +1796,4 @@ msgid "The room has assigned activities."
 msgstr ""
 
 msgid "The Room has been removed successfully."
-msgstr ""
-
-msgid "Registration"
 msgstr ""
