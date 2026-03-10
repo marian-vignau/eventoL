@@ -146,6 +146,11 @@
                                         <i class="fa fa-download"></i> {% trans "Download presentation" %}
                                     </a>
                                 {% endif %}
+                                {% if activity.external_link %}
+                                    <a href="{{ activity.external_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-raised btn-info pull-right">
+                                        <i class="fa fa-external-link"></i> {% trans "View external resource" %}
+                                    </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
